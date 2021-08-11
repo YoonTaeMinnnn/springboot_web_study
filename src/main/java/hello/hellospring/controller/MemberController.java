@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller  //컴포넌트 스캐닝
-public class MemberController {
+public class MemberController {   //스프링 실행될 때, membercontroller객체(스프링 빈)를 생성하면서 생성자 호출 -> 의존성 주입(autowired)
     private final MemberService memberService;
 
     @Autowired  //의존성 주입
