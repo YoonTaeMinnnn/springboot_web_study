@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hello.core.member.MemberServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-28T18:15:35" hostname="DESKTOP-10J9RAR" time="0.051">
-  <properties/>
-  <testcase name="join()" classname="hello.core.member.MemberServiceTest" time="0.051"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
