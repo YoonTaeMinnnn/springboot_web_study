@@ -21,6 +21,11 @@ public class AppConfig {  //공연 기획자 => 배우들의 섭외를 여기서
     }
 
     @Bean
+    public OrderService orderService(){
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    @Bean
     public MemberRepository memberRepository(){
         return new MemoryMemberRepository();        //역할
     }
@@ -29,11 +34,6 @@ public class AppConfig {  //공연 기획자 => 배우들의 섭외를 여기서
     public DiscountPolicy discountPolicy(){
         //return new FixDiscountPolicy();             //역할
         return new RateDiscountPolicy();
-    }
-
-    @Bean
-    public OrderService orderService(){
-        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
 }

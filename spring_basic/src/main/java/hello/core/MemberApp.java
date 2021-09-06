@@ -12,7 +12,7 @@ public class MemberApp {
         //AppConfig appConfig = new AppConfig();
         //MemberService memberService = appConfig.memberService();
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);  //스프링 컨테이너 생성 => 스프링 빈으로 등록
         MemberService memberService = applicationContext.getBean("memberService",MemberService.class);  //메소드 이름, 반환 타입
 
         Member member = new Member(1L, "memberA", Grade.VIP);
