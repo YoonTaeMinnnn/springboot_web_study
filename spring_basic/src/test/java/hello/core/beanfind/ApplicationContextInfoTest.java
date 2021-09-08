@@ -28,7 +28,7 @@ public class ApplicationContextInfoTest {         //빈 조회하고 싶을 때 
             BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
 
             if(beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION){
-                Object bean = ac.getBean(beanDefinitionName);
+                Object bean = ac.getBean(beanDefinitionName);   //어느 타입일지 모르기 때문에 object
                 System.out.println("name = "+ beanDefinitionName+" object = "+bean );
             }
         }

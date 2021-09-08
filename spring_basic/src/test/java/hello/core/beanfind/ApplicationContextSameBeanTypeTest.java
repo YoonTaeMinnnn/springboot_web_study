@@ -44,7 +44,7 @@ public class ApplicationContextSameBeanTypeTest {
         System.out.println("beansOfType = " + beansOfType);
         org.assertj.core.api.Assertions.assertThat(beansOfType.size()).isEqualTo(2);
     }
-        
+
 
     @Configuration
     static class SameBeanConfig{
