@@ -24,13 +24,15 @@ public class ApplicationContextExtendsFindTest {
         Assertions.assertThrows(NoUniqueBeanDefinitionException.class,
                 ()->ac.getBean(DiscountPolicy.class)  //부모타입으로 조회
         );
-    }
+    } //test
+
+
 
     @Test
     @DisplayName("자식이 둘 이상 있으면, 빈 이름을 지정하면 된다.")
     void findBeanByParentTypeBeanName(){
-        DiscountPolicy bean = ac.getBean("rateDiscountPolicy", DiscountPolicy.class);
-        org.assertj.core.api.Assertions.assertThat(bean).isInstanceOf(RateDiscountPolicy.class);
+        DiscountPolicy bean = ac.getBean("rateDiscountPolicy",DiscountPolicy.class);
+        org.assertj.core.api.Assertions.assertThat(bean).isInstanceOf(DiscountPolicy.class);
     }
 
     @Test
