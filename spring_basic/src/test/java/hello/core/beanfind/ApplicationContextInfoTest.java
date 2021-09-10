@@ -12,7 +12,7 @@ public class ApplicationContextInfoTest {         //빈 조회하고 싶을 때 
 
     @Test
     @DisplayName("모든 빈 출력하기")
-    void findAllBean(){
+    void findAllBean(){        //스프링 빈 이름들 출력
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
         for (String beanDefinitionName : beanDefinitionNames) {
             Object bean = ac.getBean(beanDefinitionName);
