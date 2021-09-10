@@ -22,7 +22,7 @@ public class ApplicationContextExtendsFindTest {
     void findBeanByParentTypeDuplicate(){
         //DiscountPolicy bean = ac.getBean(DiscountPolicy.class);
         Assertions.assertThrows(NoUniqueBeanDefinitionException.class,
-                ()->ac.getBean(DiscountPolicy.class)
+                ()->ac.getBean(DiscountPolicy.class)  //부모타입으로 조회
         );
     }
 
