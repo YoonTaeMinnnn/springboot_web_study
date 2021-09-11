@@ -1,7 +1,7 @@
 package hello.core.singleTon;
 
-public class SingletonService {
-    private static final SingletonService instance = new SingletonService();
+public class SingletonService {  //싱글톤으로 설계
+    private static final SingletonService instance = new SingletonService();  //static 이라 메모리에 하나만 올라간다.
 
     public static SingletonService getInstance(){
         return instance;
