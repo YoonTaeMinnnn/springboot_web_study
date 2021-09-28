@@ -23,7 +23,7 @@ public class Order {
     private Member member;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();  //양방향 매핑을 위한 예제
 
     @OneToOne
     @JoinColumn(name="delivery_id")   //delivery_id가 외래키
