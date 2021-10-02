@@ -16,14 +16,27 @@ public class OrderServiceImpl implements OrderService{
     //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();  //고정할인 정책
     //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();  //정률할인 정책
 
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
+    private  final MemberRepository memberRepository;  //불변의 객체 (final)
+    private  final DiscountPolicy discountPolicy;
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+
+
+
+//    @Autowired                                         //setter 자동주입
+//    void setMemberRepository(MemberRepository memberRepository){
+//        System.out.println("memberRepository = " + memberRepository);
+//        this.memberRepository=memberRepository;
+//    }
+//    @Autowired
+//    void setDiscountPolicy(DiscountPolicy discountPolicy){
+//        System.out.println("discountPolicy = " + discountPolicy);
+//        this.discountPolicy=discountPolicy;
+//    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

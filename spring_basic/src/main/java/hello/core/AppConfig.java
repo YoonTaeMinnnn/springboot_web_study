@@ -22,7 +22,8 @@ public class AppConfig {  //공연 기획자 => 배우들의 섭외를 여기서
 
     @Bean
     public OrderService orderService(){
-        return new OrderServiceImpl(memberRepository(), discountPolicy());
+        //return new OrderServiceImpl(memberRepository(), discountPolicy());
+        return null;
     }
 
     @Bean
