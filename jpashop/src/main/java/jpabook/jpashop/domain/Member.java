@@ -23,4 +23,6 @@ public class Member {
     @OneToMany(mappedBy = "member")   //order테이블의 member 값으로 변경 (없어도됨) 양방향 매핑을 위해 예제를 넣었음
     private List<Order> orders = new ArrayList<>();
 
+
+
 }
