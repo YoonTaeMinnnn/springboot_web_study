@@ -19,6 +19,7 @@ public class OrderServiceImpl implements OrderService{
     private  final MemberRepository memberRepository;  //불변의 객체 (final)
     private  final DiscountPolicy discountPolicy;
 
+    //@Autowired(required = false)   // 주입할 대상에 스프링 빈이 없어도 오류 나지 x
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
