@@ -2,13 +2,13 @@
 springboot study (basic ~ jpa, spring data jpa)
 
 
-## http
+## * http
 ### client-server architecture
     Reqeust-Response 
     client -- Reqeust --> Server
     client <-- Response -- Server
 
-## Junit
+## * Junit
 ### assertJ
     assertions.assertThat(a).isSameAs(b)  : a와 b의 주소값 비교 (싱글톤 패턴 테스트 시)  
     assertions.assertThat(a).isNotSameAs(b)  
