@@ -1,4 +1,4 @@
-# springboot_study
+# springboot_web_study
 springboot study (basic ~ jpa, spring data jpa)
 
 
