@@ -7,6 +7,8 @@ springboot study (basic ~ jpa, spring data jpa)
     Reqeust-Response 
     client -- Reqeust --> Server
     client <-- Response -- Server
+    
+## Stateful vs Stateless
 
 ## * Junit
 ### assertJ
