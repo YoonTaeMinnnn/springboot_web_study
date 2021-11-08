@@ -2,7 +2,7 @@
 springboot study (basic ~ jpa, spring data jpa)
 
 
-<Junit 유용한 메소드들>
+<Junit 유용한 메소드들>  
 assertions.assertThat(a).isSameAs(b)  : a와 b의 주소값 비교 (싱글톤 패턴 테스트 시)
 assertions.assertThat(a).isNotSameAs(b)  
 
