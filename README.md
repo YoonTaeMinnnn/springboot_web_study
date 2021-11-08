@@ -2,15 +2,7 @@
 springboot study (basic ~ jpa, spring data jpa)
 
 
-## * http
-### client-server architecture
-    Reqeust-Response 
-    client -- Reqeust --> Server
-    client <-- Response -- Server
-    
-### Stateful vs Stateless
-    Stateful : server preserves the state of the client
-    Stateless : 
+ 
 
 ## * Junit
 ### assertJ
