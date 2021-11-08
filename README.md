@@ -9,6 +9,8 @@ springboot study (basic ~ jpa, spring data jpa)
     client <-- Response -- Server
     
 ### Stateful vs Stateless
+    Stateful : server preserves the state of the client
+    Stateless : 
 
 ## * Junit
 ### assertJ
