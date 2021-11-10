@@ -14,5 +14,5 @@ springboot study (basic ~ jpa, spring data jpa)
 ### jupiter
      Assertions.assertThrows(NoSuchBeanDefinitionException.class, ()-> ac.getBean(MemberService.class) );
 
-## * jackson (json parsing lib) spring boot 기
+## * jackson (json parsing lib) spring boot 기본내장  
      
