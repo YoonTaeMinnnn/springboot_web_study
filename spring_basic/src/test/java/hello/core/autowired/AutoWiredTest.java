@@ -24,7 +24,7 @@ public class AutoWiredTest {
     }
 
     static class TestBean{
-        @Autowired(required = false)
+        @Autowired(required = false)          //해당 스프링 빈이 없어도 동작하게 한다.
         public void setNoBean1(Member member){
             System.out.println("member1 = " + member);
         }
