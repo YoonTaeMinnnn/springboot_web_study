@@ -1,6 +1,7 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,10 +10,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext          //스프링에서 생성한 entitymanager를 주입을 해주는 어노테이션
-    private EntityManager em;
+             //스프링에서 생성한 entitymanager를 주입을 해주는 어노테이션
+    private final EntityManager em;
 
     public void save(Member member){
         em.persist(member);
