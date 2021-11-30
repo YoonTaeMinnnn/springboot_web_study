@@ -42,7 +42,7 @@ public class RequestBodyStringController {
     }
 
     @PostMapping("/request-body-string-v3")  //메시지 컨버터 사용 (HttpEntity 상속)
-    public HttpEntity requestBodyStringV3(RequestEntity<String> httpEntity) throws IOException {
+    public HttpEntity requestBodyStringV3(RequestEntity<String> httpEntity){
         String body = httpEntity.getBody();
         log.info("body={}",body);
 
