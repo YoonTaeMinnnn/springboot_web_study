@@ -1,5 +1,5 @@
 # springboot_web_study
-springboot study (basic ~ jpa, spring data jpa)
+springboot study (basic ~ mvc ~ jpa, spring data jpa)
 
 
  
