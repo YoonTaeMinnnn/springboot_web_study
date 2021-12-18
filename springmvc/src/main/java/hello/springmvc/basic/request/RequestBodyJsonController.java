@@ -46,7 +46,7 @@ public class RequestBodyJsonController {
         return "ok";
     }
 
-    @ResponseBody
+    @ResponseBody  //ResponeBody 생략 하면 ModelAttribute 로 인식됨
     @PostMapping("/request-body-json-v3")
     public String requestBodyJsonV3(@RequestBody HelloData helloData) {
 
