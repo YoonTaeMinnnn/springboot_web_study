@@ -15,6 +15,9 @@
     <div class="py-5 text-center">
         <h2>상품 상세</h2>
     </div>
+
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
     <div>
         <label for="itemId">상품 ID</label>
         <input type="text" id="itemId" name="itemId" class="form-control"
@@ -47,5 +50,12 @@
         </div>
     </div>
 </div> <!-- /container -->
+
+<script th:inline="javascript">  //자바스크립트 처리(추가)
+
+    if ([[${param.status}]]) {
+        alert('저장되었습니다');
+    }
+</script>
 </body>
 </html>
