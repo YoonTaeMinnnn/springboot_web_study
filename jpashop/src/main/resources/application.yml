@@ -10,7 +10,7 @@ spring:
     properties:
       hibernate:
         # show_sql: true
-        format_sql: true
+        format_sql: true  #로그를 통해 출력
 logging.level:
   org.hibernate.SQL: debug
   #org.hibernate.type: trace
