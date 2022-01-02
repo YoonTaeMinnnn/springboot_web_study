@@ -32,7 +32,7 @@ public class Order {
 
     private LocalDateTime orderDate;      //시간 정보
 
-    private OrderStatus Status;
+    private OrderStatus status;
 
     //연관관계 메소드(양방향 매핑 시, 값을 한번에 넣어주기 위한 메소드) ----------------------------------------------
 
