@@ -16,6 +16,8 @@ springboot study (basic ~ mvc ~ jpa, spring data jpa)
 
 ## * jackson (json parsing lib) spring boot 기본내장  
 
+
+
 ## * 정적팩토리메소드  vs 생성자 패턴
 ```sh
 public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
