@@ -15,4 +15,7 @@ springboot study (basic ~ mvc ~ jpa, spring data jpa)
      Assertions.assertThrows(NoSuchBeanDefinitionException.class, ()-> ac.getBean(MemberService.class) );
 
 ## * jackson (json parsing lib) spring boot 기본내장  
+
+## * 정적팩토리메소드  vs 생성자 패턴
+
      
