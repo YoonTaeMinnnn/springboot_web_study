@@ -30,4 +30,5 @@ public static Order createOrder(Member member, Delivery delivery, OrderItem... o
         return order;
     }
 ```
+- 가동성 
      
