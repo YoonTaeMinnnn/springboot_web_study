@@ -37,10 +37,14 @@ public static Order createOrder(Member member, Delivery delivery, OrderItem... o
 ```sh
 //클래스 A의 하위 클래스 B,C 
 public static A hello(){
-  if ~~
+  if ~
     return new B();
-  else if ~~
+  else if ~
     return new C();
   return new A();
+}
 ```
-     
+- Lombok 사용시 편하게 생성 가능
+```sh
+@RequiredArgsConstructor(staticName = "hello")
+```
