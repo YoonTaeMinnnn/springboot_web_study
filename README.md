@@ -18,8 +18,16 @@ springboot study (basic ~ mvc ~ jpa, spring data jpa)
 
 ## * 정적팩토리메소드  vs 생성자 패턴
 ```sh
-cd dillinger
-npm i
-node app
+public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
 ```
      
