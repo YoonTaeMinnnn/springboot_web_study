@@ -30,5 +30,17 @@ public static Order createOrder(Member member, Delivery delivery, OrderItem... o
         return order;
     }
 ```
-- 가동성 
+- 생성자 패턴에 비해 가독성이 좋다. (생성자의 경우 이름을 지정할 수 없습니다)
+- 호출할때마다 새로운 객체를 생성할 필요가 없다.
+- 하위 자료형 객체를 반환할 수 있다. 
+  
+```sh
+//클래스 A의 하위 클래스 B,C 
+public static A hello(){
+  if ~~
+    return new B();
+  else if ~~
+    return new C();
+  return new A();
+```
      
