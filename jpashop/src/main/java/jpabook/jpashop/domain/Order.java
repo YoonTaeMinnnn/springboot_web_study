@@ -49,7 +49,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    //주문 생성 메소드 ---------------------------------------------------------------------------------
+    //주문 생성 메소드 ------------------------------------------------(정적팩토리메소드 패턴)
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
         order.setMember(member);
