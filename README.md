@@ -1,8 +1,7 @@
 # springboot_web_study
 springboot study (basic ~ mvc ~ jpa, spring data jpa)  
-까먹기 쉬운 개념들이나 유용한 라이브러리들 떠오를때마다 정리 (혼자 공부용)
 
- 
+
 
 ## * Junit
 ### assertJ
