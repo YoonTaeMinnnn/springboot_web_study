@@ -25,13 +25,9 @@ public class ItemController {
     }
 
     @PostMapping("/new")
-    public String create(BookForm bookForm) {
-        Book item = new Book();
-        item.setName(bookForm.getName());
-        item.setPrice(bookForm.getPrice());
-        item.setStockQuantity(bookForm.getStockQuantity());
-        item.setAuthor(bookForm.getAuthor());
-        item.setIsbn(bookForm.getIsbn());
+    public String create(BookForm form) {
+        Book item = new Book();  //기존식별자 없으므로 영속성 엔티티
+        item.updateBook(form.getName(),form.getPrice(),form.getStockQuantity(),form.getAuthor(),form.getIsbn());
         itemService.saveItem(item);
         return "redirect:/items";
     }
@@ -59,15 +55,8 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String updateItem(BookForm form){
-        Book book = new Book();    //Book은 준영속 엔티티 (영속성 컨텍스트가 관리 x)
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-        itemService.saveItem(book);
+    public String updateItem(@PathVariable("itemId") Long itemId, BookForm form){
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity(), form.getAuthor(), form.getIsbn());
         return "redirect:/items";
     }
 }
