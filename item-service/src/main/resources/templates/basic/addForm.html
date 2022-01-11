@@ -17,19 +17,19 @@
   </div>
   <h4 class="mb-3">상품 입력</h4>
   <form th:action
-          action="item.html" method="post">
+          action="item.html" method="post" th:object="${item}">
     <div>
       <label for="itemName">상품명</label>
-      <input type="text" id="itemName" name="itemName" class="form-control" placeholder="이름을 입력하세요">
+      <input type="text"  th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
     </div>
     <div>
       <label for="price">가격</label>
-      <input type="text" id="price" name="price" class="form-control"
+      <input type="text" th:field="*{price}" class="form-control"
              placeholder="가격을 입력하세요">
     </div>
     <div>
       <label for="quantity">수량</label>
-      <input type="text" id="quantity" name="quantity" class="form-control" placeholder="수량을 입력하세요">
+      <input type="text" th:field = "*{quantity}"class="form-control" placeholder="수량을 입력하세요">
     </div>
     <hr class="my-4">
     <div class="row">
