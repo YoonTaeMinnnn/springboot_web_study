@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -20,6 +22,15 @@ import java.util.List;
 public class BasicItemController {
 
     private final ItemRepository itemRepository;
+
+    @ModelAttribute("regions")  //컨트롤러의 모든 메소드에 적용됨 model에 값넣어짐(리턴값을)
+    public Map<String, String> regions() {
+        Map<String, String> regions = new LinkedHashMap<>();
+        regions.put("SEOUL", "서울");
+        regions.put("BUSAN", "부산");
+        regions.put("JEJU", "제주");
+        return regions;
+    }
 
     @GetMapping
     public String items(Model model){
@@ -75,6 +86,8 @@ public class BasicItemController {
 
     @PostMapping("/add")
     public String addItemV6(Item item , RedirectAttributes redirectAttributes){
+        log.info("item.open={}", item.getOpen());
+        log.info("item.regions = {}", item.getRegions());
         Item saveItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", saveItem.getId());
         redirectAttributes.addAttribute("status", true);
@@ -85,7 +98,6 @@ public class BasicItemController {
     public String item(@PathVariable("itemId")long itemId, Model model){
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-
         return "/basic/item";
     }
 
