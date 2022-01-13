@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Item {
+public class Item {  //form으로부터 입력받아오는 형태의 데이터
     private Long id;
     private String itemName;
     private Integer price;
