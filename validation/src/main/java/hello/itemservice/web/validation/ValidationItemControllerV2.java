@@ -83,7 +83,8 @@ public class ValidationItemControllerV2 {
 
 
     // 사용자가 입력값(거절당한 값)이 화면에 보이도록 하는 방식
-    @PostMapping("/add")
+    //타입오류 발생 시, fielderror에 입력값을 담아서 생성한 후, bindingresult를 생성하여 컨트롤러 호출 ==> 컨트롤러 호출 가능
+    //@PostMapping("/add")
     public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         //                            item 다음에 bindingResult 가 와야 적용됨
 
@@ -118,6 +119,46 @@ public class ValidationItemControllerV2 {
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v2/items/{itemId}";
     }
+
+
+    //오류 메시지 활용하기
+    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //                            item 다음에 bindingResult 가 와야 적용됨
+
+        //검증로직
+        if (!StringUtils.hasText(item.getItemName())){
+            bindingResult.addError(new FieldError("item","itemName",  item.getItemName(),false, new String[]{"required.item.itemName"}, null,null));
+        }
+        if (item.getPrice() == null || item.getPrice() <= 1000 || item.getPrice() > 1000000) {
+            bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000,1000000}, null));
+        }
+        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+            bindingResult.addError(new FieldError("item","quantity", item.getQuantity(), false, new String[]{"max.item.quantity"}, new Object[]{9999}, null));
+        }
+        //특정필드가 아닌 복합룰 검증 (ObjectError)
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.addError(new ObjectError("item",new String[]{"totalPriceMin"},new Object[]{10000, resultPrice},null));
+            }
+        }
+
+        //검증에 실패하면 다시 입력 폼으로
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return "/validation/v2/addForm";
+        }
+
+
+        //성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
