@@ -10,6 +10,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +26,13 @@ import java.util.Map;
 public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
+    private final ItemValidator itemValidator;
+
+    //컨트롤러에서만 적용
+    @InitBinder
+    public void init(WebDataBinder dataBinder) {
+        dataBinder.addValidators(itemValidator);
+    }
 
     @GetMapping
     public String items(Model model) {
@@ -159,8 +168,8 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-
-    @PostMapping("/add")
+    //messageCodesResolver 사용 하기 (오류메시지 레벨화) => rejectValue, reject 사용 시 사용 가능!!
+    //@PostMapping("/add")
     public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         //                            item 다음에 bindingResult 가 와야 적용됨
 
@@ -182,6 +191,48 @@ public class ValidationItemControllerV2 {
                 bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
             }
         }
+
+        //검증에 실패하면 다시 입력 폼으로
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return "/validation/v2/addForm";
+        }
+
+
+        //성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    //validator 분리하기
+    //@PostMapping("/add")
+    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //                            item 다음에 bindingResult 가 와야 적용됨
+
+        itemValidator.validate(item,bindingResult);
+
+
+        //검증에 실패하면 다시 입력 폼으로
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return "/validation/v2/addForm";
+        }
+
+
+        //성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    //Validated 어노테이션 => item을 검증기에 넣고 bindingResult에 담아옴
+    //@PostMapping("/add")
+    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //                            item 다음에 bindingResult 가 와야 적용됨
+
 
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
