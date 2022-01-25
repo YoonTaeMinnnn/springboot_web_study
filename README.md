@@ -48,4 +48,12 @@ public static A hello(){
 - Lombok 사용시 편하게 생성 가능
 ```sh
 @RequiredArgsConstructor(staticName = "hello")
-```
+```  
+## @Component vs @Configuration + @Bean  
+@Component  
+ - 개발자가 직접 작성한 클래스를 bean 등록하고자 할 경우 사용
+     
+@Configuration + @Bean  
+ - 외부라이브러리 또는 내장 클래스를 bean으로 등록하고자 할 경우 사용. 
+ - 1개 이상의 @Bean을 제공하는 클래스의 경우 반드시 @Configuraton을 명시
+ - ex) servlet filter, spring interceptor
