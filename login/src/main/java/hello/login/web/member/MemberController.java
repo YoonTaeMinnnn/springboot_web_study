@@ -36,6 +36,7 @@ public class MemberController {
             bindingResult.reject("idid", "아이디가 중복입니다.");
             return "members/addMemberForm";
         }
+
         memberRepository.save(member);
         return "redirect:/";
     }
