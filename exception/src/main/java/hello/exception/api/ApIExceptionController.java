@@ -1,14 +1,17 @@
 package hello.exception.api;
 
+import hello.exception.exception.BadRequestException;
 import hello.exception.exception.UserException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @Slf4j
@@ -29,9 +32,19 @@ public class ApIExceptionController {
         return new MemberDto(id, "hello " + id);
     }
 
+    @GetMapping("/api/response-status-ex1")
+    public String responseStatus(){
+        throw new BadRequestException();
+    }
+
+    @GetMapping("/api/response-status-ex2")
+    public String responseStatusEx2() {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad", new IllegalArgumentException());
+    }
+
     @Data  //requiredArgsConstructor, getter, setter, toString, toHashCode
     @AllArgsConstructor  //모든 필드를 매개변수로 받는 생성자 생성
-    static class MemberDto{
+    static class MemberDto {
         private String memberId;
         private String name;
     }
