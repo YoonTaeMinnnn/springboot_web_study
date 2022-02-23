@@ -111,7 +111,11 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "/login/loginForm";
         }
-
+        Optional<Member> byLoginId = memberRepository.findByLoginId(loginForm.getLoginId());
+        if (byLoginId.isEmpty()) {
+            bindingResult.reject("loginIdNotFound","존재하지 않는 아이디입니다.");
+            return "/login/loginForm";
+        }
         Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginPasswordFail", "아이디 또는 비밀번호가 일치하지 않습니다.");
