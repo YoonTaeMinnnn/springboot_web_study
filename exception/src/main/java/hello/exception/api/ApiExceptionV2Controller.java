@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApiExceptionV2Controller {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)  //생략가능 - 매개변수로 지정가능
     public ErrorResult illegalExHandler(IllegalArgumentException e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("BAD", e.getMessage());
