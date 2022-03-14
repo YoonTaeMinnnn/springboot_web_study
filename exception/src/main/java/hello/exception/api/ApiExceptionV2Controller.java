@@ -13,26 +13,26 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ApiExceptionV2Controller {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)  //생략가능 - 매개변수로 지정가능
-    public ErrorResult illegalExHandler(IllegalArgumentException e) {
-        log.error("[exceptionHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResult> userHandler(UserException e) {
-        log.error("[exceptionHandler] ex", e);
-        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
-        return new ResponseEntity(errorResult, HttpStatus.BAD_REQUEST);
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)  //IllegalArgumentException, UserException을 제외한 예외는 여기서!
-    @ExceptionHandler
-    public ErrorResult exHandler(Exception e) {
-        log.error("[exception] ex", e);
-        return new ErrorResult("EX", e.getMessage());
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(IllegalArgumentException.class)  //생략가능 - 매개변수로 지정가능
+//    public ErrorResult illegalExHandler(IllegalArgumentException e) {
+//        log.error("[exceptionHandler] ex", e);
+//        return new ErrorResult("BAD", e.getMessage());
+//    }
+//
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResult> userHandler(UserException e) {
+//        log.error("[exceptionHandler] ex", e);
+//        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
+//        return new ResponseEntity(errorResult, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)  //IllegalArgumentException, UserException을 제외한 예외는 여기서!
+//    @ExceptionHandler
+//    public ErrorResult exHandler(Exception e) {
+//        log.error("[exception] ex", e);
+//        return new ErrorResult("EX", e.getMessage());
+//    }
 
     @GetMapping("/api2/members/{id}")
     public MemberDto getMember(@PathVariable("id") String id) {
@@ -60,4 +60,5 @@ public class ApiExceptionV2Controller {
         private String memberId;
         private String name;
     }
+
 }
