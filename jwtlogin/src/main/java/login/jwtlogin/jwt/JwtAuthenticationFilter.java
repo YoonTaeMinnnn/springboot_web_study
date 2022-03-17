@@ -1,11 +1,14 @@
 package login.jwtlogin.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import login.jwtlogin.auth.PrincipalDetails;
 import login.jwtlogin.controller.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -16,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * 스프링 security에서 /login post 요청으로 username, password 전송하면==>
@@ -72,8 +76,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
         log.info("successful");
-        super.successfulAuthentication(request, response, chain, authResult);
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+        //토큰 생성
+        String jwtToken = JWT.create()
+                .withSubject(principalDetails.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))  //10분
+                .withClaim("id", principalDetails.getMember().getId())
+                .withClaim("username", principalDetails.getMember().getName())
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
     }
 }

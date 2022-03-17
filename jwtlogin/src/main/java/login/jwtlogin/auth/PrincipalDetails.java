@@ -26,6 +26,10 @@ public class PrincipalDetails implements UserDetails {
         return authorities;
     }
 
+    public Member getMember() {
+        return this.member;
+    }
+
     @Override
     public String getPassword() {
         return member.getPassword();
