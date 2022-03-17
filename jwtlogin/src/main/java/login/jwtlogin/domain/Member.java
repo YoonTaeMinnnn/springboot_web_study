@@ -1,6 +1,8 @@
 package login.jwtlogin.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -24,6 +28,12 @@ public class Member {
     private String password;
 
     private String roles;
+
+    public Member(String name, String password, String roles) {
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {
