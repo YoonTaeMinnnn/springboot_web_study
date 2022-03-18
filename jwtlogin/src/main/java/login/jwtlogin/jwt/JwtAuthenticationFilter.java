@@ -5,7 +5,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import login.jwtlogin.auth.PrincipalDetails;
 import login.jwtlogin.controller.MemberDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -54,6 +57,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             log.info("memberDto {}", memberDto.toString());
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(memberDto.getName(), memberDto.getPassword());
+
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -90,4 +94,24 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String error_json = objectMapper.writeValueAsString(new LoginFail("LOGIN_FAIL", "로그인에 실패했습니다"));
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        response.getWriter().write(error_json);
+    }
+
+    @Getter
+    @AllArgsConstructor
+    static class LoginFail{
+        private String code;
+        private String message;
+    }
+
+
+
 }

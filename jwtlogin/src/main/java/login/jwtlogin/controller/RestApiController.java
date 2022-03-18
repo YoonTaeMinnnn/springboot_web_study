@@ -1,9 +1,11 @@
 package login.jwtlogin.controller;
 
+import login.jwtlogin.auth.PrincipalDetails;
 import login.jwtlogin.domain.Member;
 import login.jwtlogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,12 @@ public class RestApiController {
     @GetMapping("/user")
     public String user() {
         return "user";
+    }
+
+    @GetMapping("/user/member")
+    public String memberInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Member member = principalDetails.getMember();
+        return member.getName();
     }
 
     @GetMapping("/manager")

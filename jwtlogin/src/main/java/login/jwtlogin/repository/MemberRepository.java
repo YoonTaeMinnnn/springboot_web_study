@@ -39,4 +39,6 @@ public class MemberRepository {
                 .findFirst();
     }
 
+
+
 }

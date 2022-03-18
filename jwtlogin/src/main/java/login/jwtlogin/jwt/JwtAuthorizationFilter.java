@@ -2,14 +2,18 @@ package login.jwtlogin.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import login.jwtlogin.auth.PrincipalDetails;
 import login.jwtlogin.domain.Member;
 import login.jwtlogin.repository.MemberRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -52,6 +56,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
         String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username")
                 .asString();
+
+
         //서명이 정상적으로 됨
         if (username != null) {
             Member member = memberRepository.findByName(username).get();
@@ -64,5 +70,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         }
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    static class authorFail{
+        private String code;
+        private String message;
     }
 }
