@@ -40,10 +40,13 @@ public class RestApiController {
         return "user";
     }
 
-    @GetMapping("/user/member")
-    public String memberInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+
+    //마이페이지 => 로그인한 사용자 정보 리턴
+    @GetMapping("/mypage")
+    public Object myInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Member member = principalDetails.getMember();
-        return member.getName();
+        return new MemberInfoDto(member.getId(), member.getName(), member.getRoles());
     }
 
     @GetMapping("/manager")
