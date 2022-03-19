@@ -4,14 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import login.jwtlogin.auth.PrincipalDetails;
-import login.jwtlogin.controller.MemberDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import login.jwtlogin.controller.memberDTO.LoginDto;
+import login.jwtlogin.error.ErrorResult;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -53,10 +50,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            MemberDto memberDto = objectMapper.readValue(request.getInputStream(), MemberDto.class);
-            log.info("memberDto {}", memberDto.toString());
+            LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+            log.info("memberDto {}", loginDto.toString());
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(memberDto.getName(), memberDto.getPassword());
+                    new UsernamePasswordAuthenticationToken(loginDto.getLoginId(), loginDto.getPassword());
 
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
@@ -89,7 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(principalDetails.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))  //10분
                 .withClaim("id", principalDetails.getMember().getId())
-                .withClaim("username", principalDetails.getMember().getName())
+                .withClaim("loginId", principalDetails.getMember().getLoginId())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
@@ -99,18 +96,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        String error_json = objectMapper.writeValueAsString(new LoginFail("LOGIN_FAIL", "로그인에 실패했습니다"));
+        String error_json = objectMapper.writeValueAsString(new ErrorResult("LOGIN_FAIL", "로그인에 실패했습니다"));
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.getWriter().write(error_json);
     }
 
-    @Getter
-    @AllArgsConstructor
-    static class LoginFail{
-        private String code;
-        private String message;
-    }
 
 
 

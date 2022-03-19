@@ -31,9 +31,9 @@ public class MemberRepository {
                 .getResultList();
     }
 
-    public Optional<Member> findByName(String name) {
-        return em.createQuery("select m from Member m where m.name= :name", Member.class)
-                .setParameter("name", name)
+    public Optional<Member> findByLoginId(String loginId) {
+        return em.createQuery("select m from Member m where m.loginId= :loginId", Member.class)
+                .setParameter("loginId", loginId)
                 .getResultList()
                 .stream()
                 .findFirst();

@@ -54,13 +54,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username")
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("loginId")
                 .asString();
 
 
         //서명이 정상적으로 됨
         if (username != null) {
-            Member member = memberRepository.findByName(username).get();
+            Member member = memberRepository.findByLoginId(username).get();
             PrincipalDetails principalDetails = new PrincipalDetails(member);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
@@ -72,10 +72,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     }
 
-    @Getter
-    @AllArgsConstructor
-    static class authorFail{
-        private String code;
-        private String message;
-    }
+
 }
