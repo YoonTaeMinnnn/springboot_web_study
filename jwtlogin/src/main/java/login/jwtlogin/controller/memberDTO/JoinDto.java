@@ -5,22 +5,28 @@ import lombok.Data;
 import lombok.NonNull;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
 public class JoinDto {
 
-    @NotNull
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String loginId;
 
+    @NotBlank
     private String password;
 
     @Email
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String university;
 
+    @NotBlank
     private String dept;
 }

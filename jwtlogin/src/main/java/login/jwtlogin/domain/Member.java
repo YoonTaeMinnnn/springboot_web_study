@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.awt.datatransfer.Clipboard;
 import java.util.*;
 
 @Entity
@@ -46,6 +47,12 @@ public class Member {
     @JoinColumn(name = "member_id")
     )
     private List<String> favoriteFoods = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards = new ArrayList<>();
+
+    //------------------------------------------------------------------------------------------------
 
 
     public Member(String name, String loginId, String password, String roles, String email, String university, String dept, Long reliability) {

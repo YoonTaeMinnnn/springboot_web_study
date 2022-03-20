@@ -7,6 +7,7 @@ import login.jwtlogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +21,11 @@ public class IndexController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/join")
-    public Object join(@RequestBody JoinDto joinDto) {
+    public Object join(@Validated @RequestBody JoinDto joinDto) {
         if (memberRepository.findByLoginId(joinDto.getLoginId()).isPresent()) {
             return new ErrorResult("JOIN_ID_ERROR", "이미 존재하는 아이디입니다");
         }
+        log.info(joinDto.getUniversity().getClass().getName());
         Member member = new Member(joinDto.getName(), joinDto.getLoginId(), bCryptPasswordEncoder.encode(joinDto.getPassword()),
                 "ROLE_USER", joinDto.getEmail(), joinDto.getUniversity(), joinDto.getDept(), 0L);
         memberRepository.save(member);
