@@ -7,11 +7,30 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
     # show_sql: true
       format_sql: true
+
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: [google ID]
+    password: [password]
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
 
 logging.level:
   org.hibernate.SQL: debug

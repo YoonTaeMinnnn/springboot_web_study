@@ -20,10 +20,6 @@ public class JoinDto {
     @NotBlank
     private String password;
 
-    @Email
-    @NotBlank
-    private String email;
-
     @NotBlank
     private String university;
 

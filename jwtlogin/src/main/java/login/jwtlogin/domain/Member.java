@@ -55,12 +55,11 @@ public class Member {
     //------------------------------------------------------------------------------------------------
 
 
-    public Member(String name, String loginId, String password, String roles, String email, String university, String dept, Long reliability) {
+    public Member(String name, String loginId, String password, String roles, String university, String dept, Long reliability) {
         this.name = name;
         this.loginId = loginId;
         this.password = password;
         this.roles= roles;
-        this.email = email;
         this.university = university;
         this.dept = dept;
         this.reliability = reliability;
@@ -72,6 +71,10 @@ public class Member {
         }else{
             return new ArrayList<>();
         }
+    }
+
+    public void updateGrade() {
+        this.roles += ",ROLE_ADMIN";
     }
 
 

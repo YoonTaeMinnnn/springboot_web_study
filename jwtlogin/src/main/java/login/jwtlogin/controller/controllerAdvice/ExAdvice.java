@@ -18,9 +18,8 @@ import java.util.List;
 public class ExAdvice {
 
     /**
-     *    1) bean validation 오류
-     *    2) type error
-     *
+     * 1) bean validation 오류
+     * 2) type error
      */
 
     @ExceptionHandler
@@ -46,5 +45,9 @@ public class ExAdvice {
         return new ErrorResult("JOIN_TYPE_ERROR", "타입이 맞지 않습니다");
     }
 
-
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResult error(RuntimeException e) {
+        return new ErrorResult("EMAIL_ERROR", "이메일 인증 실패");
+    }
 }

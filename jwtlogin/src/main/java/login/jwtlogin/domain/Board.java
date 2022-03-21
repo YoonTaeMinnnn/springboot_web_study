@@ -1,9 +1,11 @@
 package login.jwtlogin.domain;
 
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,7 +28,8 @@ public class Board {
 
     private String content;
 
-    private LocalDate date;
+    @CreatedDate
+    private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
     private MatchingStatus matchingStatus;
