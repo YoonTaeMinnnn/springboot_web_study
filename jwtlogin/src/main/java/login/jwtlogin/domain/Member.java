@@ -19,11 +19,13 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
+    private String nickname;
 
     private String loginId;
 
     private String password;
+
+    private String sex;
 
     private String roles;
 
@@ -33,7 +35,10 @@ public class Member {
 
     private String dept;
 
+    private Integer sno;
+
     private Long reliability;
+
 
     @ElementCollection
     @CollectionTable(name = "friend" , joinColumns =
@@ -55,13 +60,16 @@ public class Member {
     //------------------------------------------------------------------------------------------------
 
 
-    public Member(String name, String loginId, String password, String roles, String university, String dept, Long reliability) {
-        this.name = name;
+    public Member(String nickname, String loginId, String password, String sex, String email, String roles, String university, String dept, Integer sno, Long reliability) {
+        this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
+        this.sex = sex;
+        this.email = email;
         this.roles= roles;
         this.university = university;
         this.dept = dept;
+        this.sno = sno;
         this.reliability = reliability;
     }
 

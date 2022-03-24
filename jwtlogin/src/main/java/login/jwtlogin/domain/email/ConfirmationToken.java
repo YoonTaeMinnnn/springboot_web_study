@@ -26,8 +26,8 @@ public class ConfirmationToken {
     private boolean expired;
 
 
-    @Column(name = "member_id")
-    private Long memberId;
+//    @Column(name = "member_id")
+//    private Long memberId;
 
     @CreatedDate
     @Column(updatable = false)
@@ -36,10 +36,9 @@ public class ConfirmationToken {
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    public static ConfirmationToken createEmailConfirmationToken(Long memberId) {
+    public static ConfirmationToken createEmailConfirmationToken() {
         ConfirmationToken confirmationToken = new ConfirmationToken();
-        confirmationToken.expiredDate = LocalDateTime.now().plusMinutes(5);  //5분 후 만료
-        confirmationToken.memberId = memberId;
+        confirmationToken.expiredDate = LocalDateTime.now().plusMinutes(5);  //5분 후 만료;
         confirmationToken.expired = false;
         return confirmationToken;
     }

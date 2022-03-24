@@ -14,7 +14,8 @@ public class Restaurant {
 
     private String name;
 
-    @Embedded
-    private Address address;
+    private String category;
+
+    private String address;
 
 }

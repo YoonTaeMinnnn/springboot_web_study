@@ -38,5 +38,12 @@ public class Board {
 
     private Integer currentNumber;
 
+//    public static Board createParty(Member member, Restaurant restaurant) {
+//        Board board = new Board();
+//        board.member = member;
+//        board.restaurant = restaurant;
+//
+//    }
+
 
 }

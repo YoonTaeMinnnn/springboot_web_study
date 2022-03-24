@@ -19,18 +19,17 @@ public class ConfirmationTokenService {
 
     /**
      *
-     * @param memberId : 유저 아이디
      * @param receiverEmail : 받는 이메일 주소
      * @return : 생성한 토큰
      */
-    public String createEmailConfirmationToken(Long memberId, String receiverEmail) {
-        ConfirmationToken confirmationToken = ConfirmationToken.createEmailConfirmationToken(memberId);
+    public String createEmailConfirmationToken(String receiverEmail) {
+        ConfirmationToken confirmationToken = ConfirmationToken.createEmailConfirmationToken();
         confirmationTokenRepository.save(confirmationToken);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(receiverEmail);
-        simpleMailMessage.setSubject("대학교 이메일 인증");
-        simpleMailMessage.setText("http://localhost:8080/confirm-email?token="+confirmationToken.getId()); //생성한 토큰 쿼리파라미터로 전송
+        simpleMailMessage.setSubject("[혼밥메이트] 대학교 이메일 인증");
+        simpleMailMessage.setText("링크로 접속하면 인증이 완료됩니다.\nhttp://localhost:8080/confirm-email?token="+confirmationToken.getId()); //생성한 토큰 쿼리파라미터로 전송
         emailSenderService.sendEmail(simpleMailMessage);
         return confirmationToken.getId();
     }
@@ -40,15 +39,8 @@ public class ConfirmationTokenService {
      * @param tokenId : 사용자가 링크를 타서 전송된 토큰
      * @return
      */
-    public ConfirmationToken findExpiredToken(String tokenId) {
-        Optional<ConfirmationToken> confirmationToken = confirmationTokenRepository.find(tokenId, LocalDateTime.now(), false);
-        if(confirmationToken.isEmpty()){
-            log.info("없어요");
-            throw new RuntimeException("이메일 인증 실패");
-        }else{
-            return confirmationToken.get();
-        }
-
+    public Optional<ConfirmationToken> findExpiredToken(String tokenId) {
+        return confirmationTokenRepository.find(tokenId, LocalDateTime.now(), false);
     }
 
 }

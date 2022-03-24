@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class JoinDto {
 
     @NotBlank
-    private String name;
+    private String nickname;
 
     @NotBlank
     private String loginId;
@@ -21,8 +21,17 @@ public class JoinDto {
     private String password;
 
     @NotBlank
+    private String sex;
+
+    @Email
+    @NotBlank
+    private String email;
+
+    @NotBlank
     private String university;
 
     @NotBlank
     private String dept;
+
+    private Integer sno;   //ex) 16, 17
 }

@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 //http://localhost:8080/login 요청시 동작 (spring security 기본 로그인 주소 => /login)
 
 @Slf4j
@@ -32,13 +34,12 @@ public class PrincipalDetailService implements UserDetailsService {
     }
 
     @Transactional
-    public void confirmEmail(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService.findExpiredToken(token);
-        Member member = memberRepository.findById(confirmationToken.getMemberId());
-        log.info(member.getName());
-        confirmationToken.useToken();
-        member.updateGrade();
-        log.info(member.getRoles());
+    public Optional<ConfirmationToken> confirmEmail(String token) {
+        Optional<ConfirmationToken> confirmationToken = confirmationTokenService.findExpiredToken(token);
+        if (confirmationToken.isPresent()) {
+            confirmationToken.get().useToken();
+        }
+        return confirmationToken;
     }
 
 
