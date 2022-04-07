@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  //item테이블 안에 book,movie,album 속성을 다 넣겠다!(싱글테이블)
-@DiscriminatorColumn(name = "dtype")
+@DiscriminatorColumn(name = "dtype")     //식별 컬럼
 @Getter @Setter
 public abstract class Item {
 

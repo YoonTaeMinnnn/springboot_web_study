@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("M")
+@DiscriminatorValue("M") //식별값
 @Getter @Setter
 public class Movie extends Item{
 
