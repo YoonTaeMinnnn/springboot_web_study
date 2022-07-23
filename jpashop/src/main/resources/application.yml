@@ -1,16 +1,18 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jpashop?serverTimezone=Asia/Seoul
+    username: root
+    password: 9434340
+
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
-        # show_sql: true
-        format_sql: true  #로그를 통해 출력
+        show_sql: true
+        format_sql: true  #로그를 통해 출력 (더 예쁘게 보여줌)
+
 logging.level:
   org.hibernate.SQL: debug
   #org.hibernate.type: trace
