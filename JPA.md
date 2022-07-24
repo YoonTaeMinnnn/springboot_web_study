@@ -6,6 +6,9 @@ casecadeType.REMOVE vs orphanremoval = true
  - parent 삭제 시, 연관된 child 모두 삭제 (공통) (delete 쿼리)
  - orphanremoval = true : parent의 컬렉션에서 특정 child 삭제 시, 해당 child 삭제 (delete 쿼리)
 
+casecadeType.REMOVE + orphanremoval = true
+ - parent의 life cycle 에 완전히 종속적
+
 성능최적화( n+1 최적화 )
  - lazy + fetch join (객체 그래프 루프를 돌아서 모두 영속화)
  - lazy + join문 x + batch size ( 1:n 에서의 fetch join 은 페이징 불가 -> join 문 삭제 후, batch size 로 in query 날려서 조회쿼리 하나만)
