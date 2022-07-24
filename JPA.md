@@ -1,6 +1,10 @@
 cascade(영속성 전이) , orphanremoval = true (고아 객체)  
  - cascade : entity 의 상태변화를 연관된 entity로 전이
  - orphanremoval = true : parent와 연관이 끊어진 child 삭제
+ 
+casecadeType.REMOVE vs orphanremoval = true
+ - parent 삭제 시, 연관된 child 모두 삭제 (공통) (delete 쿼리)
+ - orphanremoval = true : parent의 컬렉션에서 특정 child 삭제 시, 해당 child 삭제 (delete 쿼리)
 
 성능최적화( n+1 최적화 )
  - lazy + fetch join (객체 그래프 루프를 돌아서 모두 영속화)
