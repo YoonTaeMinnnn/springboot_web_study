@@ -10,7 +10,7 @@
  - parent 삭제 시, 연관된 child 모두 삭제 (공통) (delete 쿼리)
  - orphanremoval = true : parent의 컬렉션에서 특정 child 삭제 시, 해당 child 삭제 (delete 쿼리)
 
-### casecadeType.REMOVE + orphanremoval = true
+### casecadeType.ALL + orphanremoval = true
  - parent의 life cycle 에 완전히 종속적
 
 ## 성능최적화( n+1 최적화 )
