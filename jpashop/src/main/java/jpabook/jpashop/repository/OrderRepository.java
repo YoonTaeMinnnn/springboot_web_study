@@ -92,5 +92,19 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    /**
+     * 데이터 뻥튀기 => 일대다 관계에서 발생
+     * distinct 키워드 사용
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                "join fetch o.member " +
+                "join fetch o.delivery " +
+                "join fetch o.orderItems oi " +
+                        "join fetch oi.item", Order.class).getResultList();
+    }
+
+
 
 }
