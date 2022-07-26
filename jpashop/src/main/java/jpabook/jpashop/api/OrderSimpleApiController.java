@@ -8,6 +8,7 @@ import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.SimpleOrderQueryDto;
+import jpabook.jpashop.repository.simpleQuery.SimpleQueryOrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
+    private final SimpleQueryOrderRepository simpleQueryOrderRepository;
 
     /**
      *  연관객체 무한루프 문제 + 프록시 객체 => type error 문제 발생
@@ -61,9 +63,10 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+
     @GetMapping("/api/v4/simple-orders")
     public List<SimpleOrderQueryDto> orderV4() {
-        return orderRepository.findOrderDtos();
+        return simpleQueryOrderRepository.findOrderDtos();
     }
 
 
