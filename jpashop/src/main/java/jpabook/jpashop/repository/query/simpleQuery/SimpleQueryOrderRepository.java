@@ -1,6 +1,5 @@
-package jpabook.jpashop.repository.simpleQuery;
+package jpabook.jpashop.repository.query.simpleQuery;
 
-import jpabook.jpashop.repository.SimpleOrderQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

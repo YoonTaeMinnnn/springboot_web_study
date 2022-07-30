@@ -1,14 +1,12 @@
 package jpabook.jpashop.api;
 
-import javassist.Loader;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
-import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import jpabook.jpashop.repository.SimpleOrderQueryDto;
-import jpabook.jpashop.repository.simpleQuery.SimpleQueryOrderRepository;
+import jpabook.jpashop.repository.query.simpleQuery.SimpleOrderQueryDto;
+import jpabook.jpashop.repository.query.simpleQuery.SimpleQueryOrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

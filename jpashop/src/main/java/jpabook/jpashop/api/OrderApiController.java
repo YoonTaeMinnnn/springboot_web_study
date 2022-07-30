@@ -6,22 +6,28 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import lombok.AllArgsConstructor;
+import jpabook.jpashop.repository.query.query.OrderQueryDto;
+import jpabook.jpashop.repository.query.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * x to many
+ * 컬렉션 조회
+ */
 @RestController
 @RequiredArgsConstructor
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     /**
      * dto 반환 시, dto 안에 엔티티 그대로의 필드가 존재하면 안됨.
@@ -29,7 +35,7 @@ public class OrderApiController {
      * 어마어마한 n+1 문제 발생 (지연로딩이 많아서)
      */
     @GetMapping("/api/v2/orders")
-    public List<OrderDto> ordersV1() {
+    public List<OrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
         return orders.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
     }
@@ -39,8 +45,30 @@ public class OrderApiController {
      * distinct 사용 => 데이터 중복 방지 
      */
     @GetMapping("/api/v3/orders")
-    public List<OrderDto> ordersV2() {
+    public List<OrderDto> ordersV3() {
         return orderRepository.findAllWithItem().stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
+    }
+
+    /**
+     * to one => 페치조인 잡고,
+     * to many => 배치사이즈로 최적화
+     * orderItems는 페치조인 x => 배치 사이즈로 추가쿼리 최적화
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset
+                                        ,@RequestParam(value = "limit", defaultValue = "100") int limit){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+
+        return orders.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+        List<OrderQueryDto> orderQueryDtos = orderQueryRepository.findOrderQueryDtos();
+        return orderQueryDtos;
     }
 
 
