@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.query.query.OrderFlatDto;
 import jpabook.jpashop.repository.query.query.OrderQueryDto;
 import jpabook.jpashop.repository.query.query.OrderQueryRepository;
 import lombok.Data;
@@ -65,10 +66,36 @@ public class OrderApiController {
         return orders.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
     }
 
+    /**
+     * dto 컬렉션 조회 => n+1문제
+     * @return
+     */
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4(){
         List<OrderQueryDto> orderQueryDtos = orderQueryRepository.findOrderQueryDtos();
         return orderQueryDtos;
+    }
+
+    /**
+     * dto 컬렉션 조회 - in 쿼리 사용 1+1 최적화
+     * @return
+     */
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5(){
+        List<OrderQueryDto> orders = orderQueryRepository.findAllByDto_optimization();
+
+        return orders;
+    }
+
+    /**
+     * dto 컬렉션 조회 - 최적화
+     * @return
+     */
+    @GetMapping("/api/v6/orders")
+    public List<OrderQueryDto> ordersV6(){
+        List<OrderFlatDto> orders = orderQueryRepository.findAllByDto_flat();
+        //OrderQueryDto로 변환하고 반환하면 된다.
+        return null;
     }
 
 
