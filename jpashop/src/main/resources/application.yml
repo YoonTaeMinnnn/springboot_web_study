@@ -13,6 +13,7 @@ spring:
         #show_sql: true
         format_sql: true  #로그를 통해 출력 (더 예쁘게 보여줌)
         default_batch_fetch_size: 100  #batch size global setting
+    open-in-view: false #-> osiv(open-session-in-view) 비활성화 (기본값 : true)
 
 logging.level:
   org.hibernate.SQL: debug

@@ -96,6 +96,12 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    /**
+     * 페치 조인 - 페이징 후 배치사이즈 세팅
+     * @param offset
+     * @param limit
+     * @return
+     */
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
         return em.createQuery("select o from Order o join fetch o.member join fetch o.delivery", Order.class)
                 .setFirstResult(offset)

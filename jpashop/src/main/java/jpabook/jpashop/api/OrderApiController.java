@@ -9,6 +9,8 @@ import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.query.query.OrderFlatDto;
 import jpabook.jpashop.repository.query.query.OrderQueryDto;
 import jpabook.jpashop.repository.query.query.OrderQueryRepository;
+import jpabook.jpashop.service.OrderQueryService;
+import jpabook.jpashop.service.dto.OrderDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +29,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderApiController {
 
+    private final OrderQueryService orderQueryService;
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+
+    @GetMapping("/test")
+    public void test() {
+        orderRepository.findAllByString(new OrderSearch());
+    }
 
     /**
      * dto 반환 시, dto 안에 엔티티 그대로의 필드가 존재하면 안됨.
@@ -48,6 +56,14 @@ public class OrderApiController {
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         return orderRepository.findAllWithItem().stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
+    }
+
+    /**
+     * osiv 비활성시, 필요 컨트롤러 (크고 복잡한 어플리케이션 개발 시, 관심사 분리가 중요)
+     */
+    @GetMapping("/api/v3/osiv/orders")
+    public List<jpabook.jpashop.service.dto.OrderDto> ordersV3_osiv() {
+        return orderQueryService.orderV3();
     }
 
     /**
