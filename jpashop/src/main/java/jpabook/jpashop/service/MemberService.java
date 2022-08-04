@@ -1,10 +1,8 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.api.MemberApiController;
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.MemberRepositoryOld;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,7 @@ import java.util.List;
 @Transactional(readOnly = true)       //스프링이 제공하는 어노테이션 추천(디폴트로 readonly로 설정됨) => 읽기전용(조회의 경우)
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepositoryOld memberRepository;
 
     //회원가입 : 중복인증포함
     @Transactional          //jpa내의 데이터 변경 (추가,변경,삭제) => 읽기전용x

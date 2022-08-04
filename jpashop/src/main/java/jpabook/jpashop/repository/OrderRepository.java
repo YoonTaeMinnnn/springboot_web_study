@@ -87,6 +87,10 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//
+//    }
+
     /**
      * 페치 조인 (ToOne)
      * @return
