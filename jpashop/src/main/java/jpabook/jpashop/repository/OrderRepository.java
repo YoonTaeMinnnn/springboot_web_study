@@ -87,6 +87,45 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//
+//    }
+
+    /**
+     * 페치 조인 (ToOne)
+     * @return
+     */
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery("select o from Order o join fetch o.member join fetch o.delivery", Order.class)
+                .getResultList();
+    }
+
+    /**
+     * 페치 조인 - 페이징 후 배치사이즈 세팅
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o join fetch o.member join fetch o.delivery", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /**
+     * 데이터 뻥튀기 => 일대다 관계에서 발생
+     * distinct 키워드 사용
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                "join fetch o.member " +
+                "join fetch o.delivery " +
+                "join fetch o.orderItems oi " +
+                        "join fetch oi.item", Order.class).getResultList();
+    }
+
 
 
 }
