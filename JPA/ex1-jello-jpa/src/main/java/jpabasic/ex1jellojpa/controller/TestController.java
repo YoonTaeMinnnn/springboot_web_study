@@ -1,9 +1,13 @@
 package jpabasic.ex1jellojpa.controller;
 
+import jpabasic.ex1jellojpa.domain.Member;
+import jpabasic.ex1jellojpa.domain.Team;
 import jpabasic.ex1jellojpa.exception.CustomException;
 import jpabasic.ex1jellojpa.exception.TestException;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
+
+
 
     @ExceptionHandler({CustomException.class, TestException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -31,7 +37,6 @@ public class TestController {
 
     @GetMapping("/exp")
     public void expTest() {
-
         throw new CustomException("커스텀 예외");
     }
 
@@ -40,4 +45,6 @@ public class TestController {
 
         throw new TestException("테스트 예외");
     }
+
+
 }

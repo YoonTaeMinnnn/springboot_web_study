@@ -1,6 +1,8 @@
 package jpabasic.ex1jellojpa.domain;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -18,9 +21,13 @@ public class Member {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)  //Locker 객체는 프록시 객체로 가져오고, Locker객체의 속성 접근 시 프록시 초기화 됨
     @JoinColumn(name = "locker_id")
     private Locker locker;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 
     @Embedded
@@ -28,6 +35,11 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     List<Order> orders = new ArrayList<>();
+
+    @Builder
+    public Member(String name) {
+        this.name = name;
+    }
 
 
 }
