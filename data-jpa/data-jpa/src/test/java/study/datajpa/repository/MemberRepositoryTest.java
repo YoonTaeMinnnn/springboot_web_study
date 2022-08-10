@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
+import study.datajpa.entity.Team;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MemberRepositoryTest {
 
     @Autowired private MemberRepository memberRepository;  //spring-data-jpa 가 스스로 구현객체(프록시객체)를 주입
+    @Autowired private TeamRepository teamRepository;
 
     @Test
     public void testMember() {
@@ -81,9 +84,36 @@ public class MemberRepositoryTest {
         memberRepository.save(member1);
         memberRepository.save(member2);
 
-
-        List<Member> members = memberRepository.findUser("aaa", 10);
+        List<Member> members = memberRepository.findByUserNameAndAge("aaa", 10);
         assertThat(members.get(0)).isEqualTo(member1);
+    }
+
+    @Test
+    public void findUserNameList() {
+        Member member1 = new Member("aaa", 10);
+        Member member2 = new Member("bbb", 20);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<String> userNames = memberRepository.findUserNameList();
+        assertThat(userNames.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void findMemberDto() {
+
+        Team team1 = new Team("teamA");
+        teamRepository.save(team1);
+
+        Member member1 = new Member("aaa", 10, team1);
+        memberRepository.save(member1);
+
+        List<MemberDto> memberDtos = memberRepository.findMemberDto();
+
+        for (MemberDto memberDto : memberDtos) {
+            System.out.println("memberDto = " + memberDto);
+        }
 
 
     }
