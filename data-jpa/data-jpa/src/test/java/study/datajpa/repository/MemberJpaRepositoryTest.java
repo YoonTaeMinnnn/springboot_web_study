@@ -10,6 +10,7 @@ import study.datajpa.entity.Member;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +28,7 @@ class MemberJpaRepositoryTest {
         Member findMember = memberJpaRepository.find(saveMember.getId());
 
         assertThat(findMember.getId()).isEqualTo(saveMember.getId());
-        assertThat(findMember.getUsername()).isEqualTo(saveMember.getUsername());
+        assertThat(findMember.getUserName()).isEqualTo(saveMember.getUserName());
     }
 
     @Test
@@ -54,6 +55,23 @@ class MemberJpaRepositoryTest {
 
         long deleteCount = memberJpaRepository.count();
         assertThat(deleteCount).isEqualTo(0);
+    }
+
+    @Test
+    public void findByUsernameAndAgeGreaterThen() {
+
+        Member member1 = new Member("aaa", 10);
+        Member member2 = new Member("aaa", 20);
+
+        memberJpaRepository.save(member1);
+        memberJpaRepository.save(member2);
+
+        List<Member> members = memberJpaRepository.findByUsernameAndAgeGreaterThen("aaa", 10);
+
+        assertThat(members.size()).isEqualTo(1);
+        assertThat(members.get(0).getAge()).isEqualTo(20);
+        assertThat(members.get(0).getUserName()).isEqualTo("aaa");
+
     }
 
 }

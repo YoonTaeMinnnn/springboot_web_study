@@ -11,6 +11,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username","age"})
+@NamedQuery(
+        name="Member.findByUserName",
+        query = "select m from Member m where m.userName = :userName"
+)
 public class Member {
 
     @Id
@@ -18,7 +22,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String username;
+    private String userName;
 
     private int age;
 
@@ -27,13 +31,18 @@ public class Member {
     private Team team;
 
     public Member(String username, int age, Team team) {
-        this.username = username;
+        this.userName = username;
         this.age= age;
         changeTeam(team);
     }
 
     public Member(String username) {
-        this.username = username;
+        this.userName = username;
+    }
+
+    public Member(String username, int age) {
+        this.userName = username;
+        this.age= age;
     }
 
     public void changeTeam(Team team) {
