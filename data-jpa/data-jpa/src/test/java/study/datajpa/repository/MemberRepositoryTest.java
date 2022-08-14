@@ -4,6 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
@@ -114,6 +118,60 @@ public class MemberRepositoryTest {
         for (MemberDto memberDto : memberDtos) {
             System.out.println("memberDto = " + memberDto);
         }
+
+
+    }
+
+    @Test
+    public void returnType() {
+        Member member1 = new Member("AAA", 10);
+        Member member2 = new Member("BBB", 20);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<Member> member = memberRepository.findListByUserName("AAA");
+
+    }
+
+
+    // List, Page, Slice 셋 중에 선택 가능
+    @Test
+    public void paging() {
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 10));
+        memberRepository.save(new Member("member3", 10));
+        memberRepository.save(new Member("member4", 10));
+        memberRepository.save(new Member("member5", 10));
+
+
+        int age = 10;
+
+        // Page : 몇번째 페이지인지(0 페이지부터) , size : 크기 , 카운트 쿼리 날림, 총 페이지 개수를 알 수 있음.
+        // Slice : count + 1개 조회 : 1개 존재 시, 다음페이지 존재 / 총 페이지 개수 알 수 없지만, 다음페이지 존재 여부를 알 수 있음.
+        // ex ) page:1, size=3 ==> 3개씩 페이징 하는데, 두번째 페이지 가져와라
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "userName"));
+
+        //when
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+
+        //추가 실무팁(dto 전환)
+        Page<MemberDto> members = page.map(member -> new MemberDto(member.getId(), member.getUserName(), null));
+        //members 그대로 api 반환 가능
+
+
+        //then
+        List<Member> content = page.getContent();
+        long totalCount = page.getTotalElements();
+
+        System.out.println("content = " + content);
+        System.out.println("totalCount = " + totalCount);
+
+        assertThat(content.size()).isEqualTo(3); // 멤버 갯수
+        assertThat(totalCount).isEqualTo(5);   //총 카운트
+        assertThat(page.getNumber()).isEqualTo(0);  // 몇번째 페이지 인지
+        assertThat(page.isFirst()).isTrue();  // 첫번째 페이지 여부
+        assertThat(page.hasNext()).isTrue();  // 다음 페이지 존재 여부
 
 
     }
