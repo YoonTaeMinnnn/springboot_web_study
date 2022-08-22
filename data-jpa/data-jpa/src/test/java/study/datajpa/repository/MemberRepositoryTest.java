@@ -13,6 +13,8 @@ import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,8 @@ public class MemberRepositoryTest {
 
     @Autowired private MemberRepository memberRepository;  //spring-data-jpa 가 스스로 구현객체(프록시객체)를 주입
     @Autowired private TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember() {
@@ -166,13 +170,32 @@ public class MemberRepositoryTest {
 
         System.out.println("content = " + content);
         System.out.println("totalCount = " + totalCount);
+        System.out.println("page.getSize() = " + page.getSize());
 
-        assertThat(content.size()).isEqualTo(3); // 멤버 갯수
-        assertThat(totalCount).isEqualTo(5);   //총 카운트
-        assertThat(page.getNumber()).isEqualTo(0);  // 몇번째 페이지 인지
-        assertThat(page.isFirst()).isTrue();  // 첫번째 페이지 여부
-        assertThat(page.hasNext()).isTrue();  // 다음 페이지 존재 여부
+//        assertThat(content.size()).isEqualTo(3); // 멤버 갯수
+//        assertThat(totalCount).isEqualTo(5);   //총 카운트
+//        assertThat(page.getNumber()).isEqualTo(0);  // 몇번째 페이지 인지
+//        assertThat(page.isFirst()).isTrue();  // 첫번째 페이지 여부
+//        assertThat(page.hasNext()).isTrue();  // 다음 페이지 존재 여부
+    }
 
+    @Test
+    public void bulkUpdate() {
+        memberRepository.save(new Member("memberA", 10));
+        memberRepository.save(new Member("memberB", 19));
+        memberRepository.save(new Member("memberC", 20));
+        memberRepository.save(new Member("memberD", 21));
+        memberRepository.save(new Member("memberE", 40));
 
+        // 벌크연산 jpql 실행전에는 자동으로 flush()날려줌.. member들 다 db에 저장 쿼리나감
+        int resultCount = memberRepository.bulkAgePlus(20);
+        // 영속성 컨텍스트 초기화 해줘야함
+        em.flush();
+        em.clear();
+
+        List<Member> member5 = memberRepository.findByUserName("memberE");
+        System.out.println("member5 = " + member5.get(0));
+
+        assertThat(resultCount).isEqualTo(3);
     }
 }

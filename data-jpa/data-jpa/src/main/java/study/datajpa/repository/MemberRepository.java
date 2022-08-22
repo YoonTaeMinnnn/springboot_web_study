@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -48,9 +49,15 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     // 카운트 쿼리 자체는 성능상 무거움..
     // 조인쿼리가 있는 경우, 카운트 쿼리를 분리하는 것을 추천 (카운트 쿼리에서는 조인할 필요가 없기 때문에)
-    @Query(value = "select m from Member m left join m.team t", countQuery = "select count(m) from Member m ")
+    @Query(value = "select m from Member m left join m.team t", countQuery = "select count(m) from Member m")
     Page<Member> findByAgeCountQuery(int age, Pageable pageable);
 
     // Page or Slice or List : return type
     Page<Member> findByAge(int age, Pageable pageable);
+
+
+    @Modifying(clearAutomatically = true) // executeUpdate 실행됨 + em.clear()
+    @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
+    int bulkAgePlus(@Param("age") int age);
+
 }
