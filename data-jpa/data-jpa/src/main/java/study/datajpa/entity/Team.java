@@ -25,6 +25,10 @@ public class Team {
     @OneToMany(mappedBy = "team")
     List<Member> members = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "director_id")
+    private Director director;
+
     public Team(String name) {
         this.name = name;
     }
