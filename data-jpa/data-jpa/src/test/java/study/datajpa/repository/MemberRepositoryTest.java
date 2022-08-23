@@ -224,6 +224,22 @@ public class MemberRepositoryTest {
         }
     }
 
+    @Test
+    public void queryHint() {
+
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+
+        Member member = memberRepository.findReadOnlyByUserName("member1");
+        member.setUserName("member2");
+
+        em.flush();
+
+    }
+
 
 
 }
