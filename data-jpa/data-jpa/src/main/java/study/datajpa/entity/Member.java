@@ -13,7 +13,7 @@ import javax.persistence.*;
         name="Member.findByUserName",
         query = "select m from Member m where m.userName = :userName"
 )
-public class Member extends BaseTimeEntity{
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue
