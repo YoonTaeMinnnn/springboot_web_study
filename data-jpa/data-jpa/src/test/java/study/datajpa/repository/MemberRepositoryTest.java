@@ -240,6 +240,24 @@ public class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void callCustom() {
+        List<Member> member = memberRepository.findMember();
+
+    }
+
+    @Test
+    public void JpaEventBaseEntity() throws InterruptedException {
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+
+        Thread.sleep(100);
+        member1.setUserName("member2");
+
+        System.out.println("member1.getCreateBy() = " + member1.getCreateBy());
+        System.out.println("member1.getUpdateBy() = " + member1.getUpdateBy());
+    }
+
 
 
 }
