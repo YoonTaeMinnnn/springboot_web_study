@@ -22,3 +22,11 @@
 
 ## spring-data-jpa  
  - @Transactional(readonly=true) : commit 시점에 flush 작동x (성능상 우위)
+ - query method : 메소드 네임 규칙으로 조회쿼리 생성
+ - @Query : 어플리케이션 로딩 시점에 에러 확인 가능 (엄청난 장점, named query와 비슷, but named query는 잘 사용x)
+ - ex) @EntityGraph(attributePaths = {"team", "team.director"})  : fetch join (default : left join fetch)
+ - @Modifying(clearAutomatically : true )  : executeUpdate() 실행 (update된 count수 반환) + em.clear()
+ - Page, Slice, List : 페이징 조회 반환타입 3가지
+ - Page의 경우 total query -> 성능이슈... countQuery를 통해 불필요한 조인쿼리 없애기 가능 /  Slice의 경우 countQuery x
+ - Page객체 그대로 api 반환 가능 
+ - SimpleJpaRepository : save, delete 등 (트랜젝션처리) / default : readonly transactional
