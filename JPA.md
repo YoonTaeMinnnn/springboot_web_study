@@ -20,5 +20,5 @@
  - 둘 이상의 컬렉션은 fetch join 불가 ex) from Team t join fetch t.members join fetch t.orders
 
 
-## spring-data-jpa
-
+## spring-data-jpa  
+ - @Transactional(readonly=true) : commit 시점에 flush 작동x (성능상 우위)
