@@ -160,7 +160,7 @@ public class MemberRepositoryTest {
         Page<Member> page = memberRepository.findByAge(age, pageRequest);
 
         //추가 실무팁(dto 전환)
-        Page<MemberDto> members = page.map(member -> new MemberDto(member.getId(), member.getUserName(), null));
+        Page<MemberDto> members = page.map(member -> new MemberDto(member));
         //members 그대로 api 반환 가능
 
 
@@ -219,9 +219,10 @@ public class MemberRepositoryTest {
 
         List<Member> members = memberRepository.findAll();
 
-        for (Member member : members) {
-            System.out.println("member = " + member.getTeam().getName());
-        }
+
+      for (Member member : members) {
+        System.out.println("member = " + member.getTeam().getName());
+       }
     }
 
     @Test

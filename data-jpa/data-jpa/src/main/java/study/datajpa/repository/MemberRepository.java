@@ -67,8 +67,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     // @EntityGraph -> 내부적으로 페치조인 실행
     //team 의 director 도 페치조인
     @Override
-    @EntityGraph(attributePaths = {"team","team.director"})
+    @EntityGraph(attributePaths = {"team", "team.director"})
     List<Member> findAll();
+    
 
     @EntityGraph(attributePaths = {"team"})
     @Query("select m from Member m")

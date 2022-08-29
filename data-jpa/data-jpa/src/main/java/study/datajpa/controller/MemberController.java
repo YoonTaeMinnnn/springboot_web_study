@@ -2,7 +2,9 @@ package study.datajpa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +29,12 @@ public class MemberController {
         return member.getUserName();
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 0; i < 100; i++) {
-            memberRepository.save(new Member("member" + i, i));
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        for (int i = 0; i < 100; i++) {
+//            memberRepository.save(new Member("member" + i, i));
+//        }
+//    }
 
 
     // 권장하지 않음
@@ -50,4 +52,5 @@ public class MemberController {
         // page json 에 페이지 수, 사이즈, 총 데이터수 등등 포함하여 전달
         return map;
     }
+
 }
