@@ -46,7 +46,7 @@ public class MemberController {
     // 기본 사이즈 = 20
     // 페이지 인덱스 0 부터 시작을 디폴트로 쓰는것을 권장
     @GetMapping("/members")
-    public Page<MemberDto> list(Pageable pageable) {
+    public Page<MemberDto> list(@PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Member> page = memberRepository.findAll(pageable);
         Page<MemberDto> map = page.map(member -> new MemberDto(member)); //dto반환
         // page json 에 페이지 수, 사이즈, 총 데이터수 등등 포함하여 전달
