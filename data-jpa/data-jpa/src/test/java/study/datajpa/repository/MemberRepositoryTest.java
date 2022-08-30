@@ -259,6 +259,22 @@ public class MemberRepositoryTest {
         System.out.println("member1.getUpdateBy() = " + member1.getUpdateBy());
     }
 
+    // 네이티브 쿼리 (권장x) -> jdbc template or mybatis 로 대체권
+    @Test
+    public void nativeQuery() {
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
 
+        Member member1 = new Member("member1", 10, teamA);
+        memberRepository.save(member1);
+
+        Page<MemberProjection> result = memberRepository.findByNativeProjection(PageRequest.of(0, 10));
+        List<MemberProjection> content = result.getContent();
+        for (MemberProjection memberProjection : content) {
+            System.out.println("memberProjection = " + memberProjection.getUserName());
+            System.out.println("memberProjection = " + memberProjection.getTeamName());
+        }
+
+    }
 
 }
