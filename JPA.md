@@ -29,8 +29,12 @@
  - Page, Slice, List : 페이징 조회 반환타입 3가지
  - Page의 경우 total query -> 성능이슈... countQuery를 통해 불필요한 조인쿼리 없애기 가능 /  Slice의 경우 countQuery x
  - Page객체 그대로 api 반환 가능 
- - SimpleJpaRepository : save, delete 등 (트랜젝션처리) / default : readonly transactional
+ - *SimpleJpaRepository* (spring-data-jpa 구현체): save, delete 등 (트랜젝션처리) / save, delete -> @Transactional | default : readonly transactional
+ - (dirty checking 외의 등록 삭제 조회 과정은 @Transactional 불필요 (이미 구현체에 달려있음)
  
  - id(pk)값이 존재하는 상태에서 save()호출 시, *persist* 대신 *merge*가 실행됨!!(주의) 
  - merge : db에 엔티티가 존재한다는 가정 하에 동작 (db에서 조회 후 모든 필드값을 업데이트 - 사용 비추천)
  - generatedValue 전략 사용x --> persistable인터페이스 구현해서 id존재여부 검증 절차 필요 (검증 여부에 따라 로직 변경)
+
+## querydsl
+ - JPAQueryFactory : (동시성 문제 해결) 다른 트랜젝션내에서는 동일한 entitymanager -> 각각 다른 영속성 컨텍스트 호출
