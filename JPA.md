@@ -38,3 +38,4 @@
 
 ## querydsl
  - JPAQueryFactory : (동시성 문제 해결) 다른 트랜젝션내에서는 동일한 entitymanager -> 각각 다른 영속성 컨텍스트 호출
+ - ㄴㅁㅇㄴㅁㅇ
