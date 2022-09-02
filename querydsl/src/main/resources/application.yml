@@ -12,6 +12,8 @@ spring:
       hibernate:
       show_sql: true
       format_sql: true
+  jooq:
+    sql-dialect: org.hibernate.dialect.MySQL8Dialect
 
 logging.level:
   org.hibernate.SQL: debug
