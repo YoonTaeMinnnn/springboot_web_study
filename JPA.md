@@ -38,3 +38,6 @@
 
 ## querydsl
  - JPAQueryFactory : (동시성 문제 해결) 다른 트랜젝션내에서는 동일한 entitymanager -> 각각 다른 영속성 컨텍스트 호출
+ - dto조회 시, property, field, constructor(3가지) 방식 가능 | dto에 기본생성자 존재해야함!!
+ - ex) Projections.contructor()
+ - querydsl - dto조회 : 생성자에 @QueryProjection -> 간편하게 조회가능 (but, querydsl에 의존성 생김 - 순수한 dto x, 아키텍쳐에 맞게 유연하게 선택) 
