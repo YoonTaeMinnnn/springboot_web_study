@@ -41,3 +41,5 @@
  - dto조회 시, property, field, constructor(3가지) 방식 가능 | dto에 기본생성자 존재해야함!!
  - ex) Projections.contructor()
  - querydsl - dto조회 : 생성자에 @QueryProjection -> 간편하게 조회가능 (but, querydsl에 의존성 생김 - 순수한 dto x, 아키텍쳐에 맞게 유연하게 선택) 
+ - 동적쿼리 : BooleanBuilder , where절 활용(권장)
+ - querydsl - 자바코드로 구성 -> 동적쿼리문을 필요에 맞게 컴포지션 가능, 코드 재사용성 up
