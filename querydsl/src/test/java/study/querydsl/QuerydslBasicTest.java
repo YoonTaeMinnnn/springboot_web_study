@@ -9,6 +9,8 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.dto.MemberDto;
@@ -695,7 +698,7 @@ public class QuerydslBasicTest {
         }
     }
 
-    // 소문자 함수
+    // 소문자 함.
     @Test
     public void sqlFunction2() {
         List<String> result = jpaQueryFactory
@@ -710,6 +713,50 @@ public class QuerydslBasicTest {
         }
     }
 
+    @Test
+    public void practiceV1() {
+        String username = "member1";
+        Integer age = null;
+
+        //동적 쿼리
+        List<Member> result = jpaQueryFactory
+                .selectFrom(member)
+                .where(allEq(username, age))
+                .fetch();
+
+    }
+
+    private BooleanExpression usernameEqV2(String username) {
+        return username != null? member.username.eq(username) : null;
+    }
+
+    private BooleanExpression ageEqV2(Integer age) {
+        return age != null? member.age.eq(age) : null;
+    }
+
+    private Predicate allEqV2(String usernameCond, Integer ageCond) {
+        return usernameEq(usernameCond).and(ageEq(ageCond));
+    }
+
+    @Test
+    public void practiceV2() {
+        long updateCount = jpaQueryFactory
+                .update(member)
+                .set(member.username, "memberA")
+                .where(member.username.eq("member1"))
+                .execute();
+
+        assertThat(updateCount).isEqualTo(1);
+
+        long deleteCount = jpaQueryFactory
+                .delete(member)
+                .where(member.username.eq("member1"))
+                .execute();
+
+        assertThat(deleteCount).isEqualTo(1);
+
+
+    }
 
 
 }

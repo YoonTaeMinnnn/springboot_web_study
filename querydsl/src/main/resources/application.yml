@@ -15,5 +15,6 @@ spring:
   jooq:
     sql-dialect: org.hibernate.dialect.MySQL8Dialect
 
+
 logging.level:
   org.hibernate.SQL: debug
