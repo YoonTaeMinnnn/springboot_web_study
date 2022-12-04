@@ -93,4 +93,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     )
     Page<MemberProjection> findByNativeProjection(Pageable pageable);
 
+    @Query("select m from Member m where m.userName like %:username%")
+    List<Member> findByUserNameSearch(@Param("username") String username);
+
 }

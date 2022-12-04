@@ -4,7 +4,6 @@ spring:
     url: jdbc:mysql://localhost:3306/datajpa?serverTimezone=Asia/Seoul
     username: root
     password: 9434340
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,6 +11,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        default_batch_fetch_size: 100 # 기본 배치 사이즈 지정
+    open-in-view: false
 
 
   data:

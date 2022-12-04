@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
@@ -157,20 +158,20 @@ public class MemberRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "userName"));
 
         //when
-        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+        Slice<Member> slice = memberRepository.findByAge(age, pageRequest);
 
         //추가 실무팁(dto 전환)
-        Page<MemberDto> members = page.map(member -> new MemberDto(member));
+        Slice<MemberDto> members = slice.map(member -> new MemberDto(member));
         //members 그대로 api 반환 가능
 
 
         //then
-        List<Member> content = page.getContent();
-        long totalCount = page.getTotalElements();
-
-        System.out.println("content = " + content);
-        System.out.println("totalCount = " + totalCount);
-        System.out.println("page.getSize() = " + page.getSize());
+//        List<Member> content = page.getContent();
+//        long totalCount = page.getTotalElements();
+//
+//        System.out.println("content = " + content);
+//        System.out.println("totalCount = " + totalCount);
+//        System.out.println("page.getSize() = " + page.getSize());
 
 //        assertThat(content.size()).isEqualTo(3); // 멤버 갯수
 //        assertThat(totalCount).isEqualTo(5);   //총 카운트
@@ -276,5 +277,24 @@ public class MemberRepositoryTest {
         }
 
     }
+
+    @Test
+    public void sample() {
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamA);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<Team> teams = teamRepository.findByMembers();
+        for (Team team : teams) {
+            System.out.println("team이름 = " + team.getName());
+        }
+
+    }
+
+
 
 }

@@ -1,6 +1,7 @@
 package study.datajpa.entity;
 
 import lombok.*;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 
