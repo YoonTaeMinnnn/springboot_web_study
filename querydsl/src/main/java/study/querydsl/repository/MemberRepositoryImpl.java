@@ -1,33 +1,33 @@
 package study.querydsl.repository;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.data.support.PageableExecutionUtils;
 import study.querydsl.dto.MemberSearchDto;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.dto.QMemberTeamDto;
+import study.querydsl.entity.Member;
+import study.querydsl.entity.QMember;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
 import static study.querydsl.entity.QMember.member;
 import static study.querydsl.entity.QTeam.team;
 
-
+@RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepositoryCustom{
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    public MemberRepositoryImpl(EntityManager em) {
-        this.jpaQueryFactory = new JPAQueryFactory(em);
-    }
 
     @Override
     public List<MemberTeamDto> search(MemberSearchDto memberSearchDto) {
@@ -114,5 +114,47 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
 
     private BooleanExpression usernameEq(String username) {
         return hasText(username) ? member.username.eq(username) : null;
+    }
+
+
+    @Override
+    public Slice<MemberTeamDto> findMemberList(Pageable pageable) {
+        List<MemberTeamDto> members = jpaQueryFactory.select(
+                        new QMemberTeamDto(member.id.as("memberId"), member.username, member.age
+                                , team.id.as("teamId"), team.name.as("teamName")
+                        )
+                )
+                .from(member)
+                .join(member.team, team)
+                .orderBy(getOrderSpecifier(pageable.getSort()).stream().toArray(OrderSpecifier[]::new)) //배열만 가능!!
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1)
+                .fetch();
+
+        return new SliceImpl<>(members, pageable, nextPage(pageable, members));
+    }
+
+    public boolean nextPage(Pageable pageable, List<MemberTeamDto> members) {
+        if (members.size() > pageable.getPageSize()){
+            members.remove(pageable.getPageSize());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<OrderSpecifier> getOrderSpecifier(Sort sort) {
+        List<OrderSpecifier> orders = new ArrayList<>();
+
+        sort.stream().forEach(
+                s -> {
+                    Order order = s.isAscending() ? Order.ASC : Order.DESC;
+                    String property = s.getProperty();
+                    PathBuilder orderByExpression = new PathBuilder(member.getType(), member.getMetadata());
+                    orders.add(new OrderSpecifier(order, orderByExpression.get(property)));
+                }
+        );
+
+        return orders;
     }
 }

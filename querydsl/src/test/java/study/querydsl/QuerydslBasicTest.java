@@ -80,7 +80,6 @@ public class QuerydslBasicTest {
     @Test
     public void startQuerydsl() {
 
-
         Member findMember = jpaQueryFactory
                 .select(member)
                 .from(member)
@@ -756,6 +755,11 @@ public class QuerydslBasicTest {
                 .execute();
 
         assertThat(deleteCount).isEqualTo(1);
+
+    }
+
+    @Test
+    public void orderPagingTest() {
 
 
 

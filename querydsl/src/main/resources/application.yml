@@ -6,7 +6,6 @@ spring:
     url: jdbc:mysql://localhost:3306/querydsl?serverTimezone=Asia/Seoul
     username: root
     password: 9434340
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -14,6 +13,7 @@ spring:
       hibernate:
       show_sql: true
       format_sql: true
+#    open-in-view: false
   jooq:
     sql-dialect: org.hibernate.dialect.MySQL8Dialect
 

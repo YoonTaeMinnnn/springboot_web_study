@@ -2,6 +2,7 @@ package study.querydsl.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import study.querydsl.dto.MemberSearchDto;
 import study.querydsl.dto.MemberTeamDto;
 
@@ -14,4 +15,6 @@ public interface MemberRepositoryCustom {
     Page<MemberTeamDto> searchPageSimple(MemberSearchDto memberSearchDto, Pageable pageable);
 
     Page<MemberTeamDto> searchPageComplex(MemberSearchDto memberSearchDto, Pageable pageable);
+
+    Slice<MemberTeamDto> findMemberList(Pageable pageable);
 }
