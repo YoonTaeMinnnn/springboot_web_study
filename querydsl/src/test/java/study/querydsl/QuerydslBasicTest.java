@@ -15,6 +15,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,11 @@ import study.querydsl.dto.UserDto;
 import study.querydsl.entity.*;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 //static import
 import static com.querydsl.jpa.JPAExpressions.*;
@@ -168,6 +173,8 @@ public class QuerydslBasicTest {
                 .where(member.age.eq(100))
                 .orderBy(member.age.desc(), member.username.asc().nullsLast())
                 .fetch();
+
+
         Member member5 = members.get(0);
         Member member6 = members.get(1);
         Member memberNull = members.get(2);
@@ -217,6 +224,7 @@ public class QuerydslBasicTest {
      * 팀의 이름과 각 팀의 평균 연령을 구하라
      */
     @Test
+    @DisplayName("간단 테스트")
     public void group() {
         List<Tuple> result = jpaQueryFactory
                 .select(
@@ -581,6 +589,10 @@ public class QuerydslBasicTest {
         for (MemberDto memberDto : memberDtos) {
             System.out.println("memberDto = " + memberDto);
         }
+        LocalDateTime time = LocalDateTime.now();
+
+        Optional<String> text = Optional.ofNullable("ads");
+
     }
 
 

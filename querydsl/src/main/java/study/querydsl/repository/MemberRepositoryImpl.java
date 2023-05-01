@@ -9,14 +9,12 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.support.PageableExecutionUtils;
 import study.querydsl.dto.MemberSearchDto;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.dto.QMemberTeamDto;
-import study.querydsl.entity.Member;
-import study.querydsl.entity.QMember;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +81,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
 
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(member.count())
