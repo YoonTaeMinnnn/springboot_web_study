@@ -13,7 +13,7 @@ public class OrderRepositoryV3 {
 
     private final LogTrace logTrace;
 
-    public void save(TraceStatus beforeStatus, String itemId) {
+    public void save(String itemId) {
 
         TraceStatus status = logTrace.begin("OrderRepositoryV1.orderItem()");
         try {

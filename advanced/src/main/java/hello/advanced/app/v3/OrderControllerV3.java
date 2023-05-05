@@ -18,7 +18,7 @@ public class OrderControllerV3 {
     public String request(String itemId) {
         TraceStatus status = logTrace.begin("OrderController.request()");
         try {
-            orderServiceV3.orderItem(status,itemId);
+            orderServiceV3.orderItem(itemId);
         } catch (Exception e) {
             logTrace.exception(status, e);
             throw e; //예외를 잡지 말고 던져야 흐름을 유지할 수 있다.

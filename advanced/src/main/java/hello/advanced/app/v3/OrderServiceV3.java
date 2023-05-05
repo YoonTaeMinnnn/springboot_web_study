@@ -13,10 +13,10 @@ public class OrderServiceV3 {
     private final OrderRepositoryV3 orderRepositoryV3;
     private final LogTrace logTrace;
 
-    public void orderItem(TraceStatus beforeStatus, String itemId) {
+    public void orderItem(String itemId) {
         TraceStatus status = logTrace.begin("OrderServiceV1.orderItem()");
         try {
-            orderRepositoryV3.save(status, itemId);
+            orderRepositoryV3.save(itemId);
         } catch (Exception e) {
             logTrace.exception(status, e);
             throw e; //예외를 잡지 말고 던져야 흐름을 유지할 수 있다.
