@@ -1,4 +1,4 @@
-package hello.advisor;
+package hello.proxy.advisor;
 
 import hello.proxy.common.advice.TimeAdvice;
 import hello.proxy.common.service.ServiceImpl;
