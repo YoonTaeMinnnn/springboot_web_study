@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.5'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'org.springframework.boot' version '2.7.11'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'hello'
@@ -19,18 +19,16 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	// 자동 프록시 생성기 사용가능 (AnnotationAwareAspectJAutoProxyCreator)
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-	//테스트에서 lombok 사용
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }
