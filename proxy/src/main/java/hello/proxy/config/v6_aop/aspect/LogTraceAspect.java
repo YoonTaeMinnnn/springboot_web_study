@@ -17,7 +17,7 @@ public class LogTraceAspect {
     private final LogTrace logTrace;
 
     // 스프링이 어드바이저를 생성
-    @Around("execution(* hello.proxy.app..*(..))")
+    @Around("execution(* hello.proxy.app..*.*(..))")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable{
         TraceStatus status = null;
         try {

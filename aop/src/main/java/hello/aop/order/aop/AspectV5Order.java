@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 
 @Slf4j
-@Aspect
 public class AspectV5Order {
 
     /*
