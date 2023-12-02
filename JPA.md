@@ -7,7 +7,7 @@
  - orphanremoval = true : parent와 연관이 끊어진 child 삭제
  
 ### casecadeType.REMOVE vs orphanremoval = true
- - parent 삭제 시, 연관된 child 모두 삭제 (공통) (delete 쿼리)
+ - cascadeType.REMOVE : parent 삭제 시, 연관된 child 모두 삭제 (공통) (delete 쿼리)
  - orphanremoval = true : parent의 컬렉션에서 특정 child 삭제 시, 해당 child 삭제 (delete 쿼리)
 
 ### casecadeType.ALL + orphanremoval = true
