@@ -1,13 +1,11 @@
 package jpa.demo.bean;
 
 import jpa.demo.controller.annotation.MainOrderService;
-import jpa.demo.service.OrderService;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import jpa.demo.service.DiscountPolicy;
+import jpa.demo.service.FixedDiscountPolicy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.*;
@@ -16,11 +14,11 @@ import static org.assertj.core.api.Assertions.*;
 public class PrimaryBeanTest {
 
 //    @Autowired private OrderService orderService;
-    @Autowired @MainOrderService OrderService orderService;
+    @Autowired @MainOrderService DiscountPolicy discountPolicy;
     @Test
     @DisplayName("@Primary")
     public void primaryTest(){
 //        assertThat(orderService.order()).isEqualTo("A 주문 호출");
-        assertThat(orderService.order()).isEqualTo("B 주문 호출");
+        assertThat(discountPolicy).isInstanceOf(FixedDiscountPolicy.class);
     }
 }

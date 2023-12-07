@@ -8,15 +8,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @Primary
-public class AOrderService implements OrderService {
+public class FixedDiscountPolicy implements DiscountPolicy {
 
     @Override
-    public String order() {
-        return "A 주문 호출";
+    public double discount(int price) {
+        return price - 1000.0;
     }
 
-    @Override
-    public void cancel() {
-        log.info("A 주문 취소 호출");
-    }
+
 }
