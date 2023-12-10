@@ -20,9 +20,8 @@ public class BeanLifeCycleTest {
 
     @Configuration
     static class LifeCycleConfig{
-        // 메서드 이름을 자유롭게 작성 가 + 외부 라이브러리의 초기화&종료 메서드 또한 호출 가능
-        // 외부라이브러리의 초기화&종료 메서드는 대부분 추론 가능 (이름 : close or shutdown) -> 설정해주지 않아도 된다.
-        @Bean(initMethod = "init", destroyMethod = "close")
+
+        @Bean
         public NetworkClient networkClient() {
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://spring-dev.com");

@@ -1,5 +1,7 @@
 package jpa.demo.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -32,6 +34,9 @@ public class NetworkClient {
 
 
     // 의존관계 주입이 완료되고 -> 실행됨
+    // 최신 스프링부트에서 적극적으로 권장하는 방식
+    // 단, 외부라이브러리의 초기화&종료 메서드 호출 시, 사용하지 못함. 수동방식으로 사용해야한다.
+    @PostConstruct
     public void init() {
         System.out.println("init");
         connect();
@@ -39,6 +44,7 @@ public class NetworkClient {
     }
 
     // 빈 종료되기 이전에 -> 실행됨
+    @PreDestroy
     public void close() {
         System.out.println("close");
         disconnect();
