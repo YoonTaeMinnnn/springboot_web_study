@@ -1,13 +1,11 @@
-package jpa.demo.service;
+package jpa.demo.service.discountpolicy;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-@Primary
+//@Component
+//@Primary
 public class FixedDiscountPolicy implements DiscountPolicy {
 
     @Override

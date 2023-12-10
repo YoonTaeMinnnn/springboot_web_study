@@ -1,4 +1,4 @@
-package jpa.demo.service;
+package jpa.demo.service.discountpolicy;
 
 public interface DiscountPolicy {
 

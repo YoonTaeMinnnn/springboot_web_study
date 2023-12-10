@@ -1,8 +1,8 @@
 package jpa.demo.bean;
 
 import jpa.demo.controller.annotation.MainOrderService;
-import jpa.demo.service.DiscountPolicy;
-import jpa.demo.service.FixedDiscountPolicy;
+import jpa.demo.service.discountpolicy.DiscountPolicy;
+import jpa.demo.service.discountpolicy.FixedDiscountPolicy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

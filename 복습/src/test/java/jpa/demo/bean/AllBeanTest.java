@@ -1,14 +1,9 @@
 package jpa.demo.bean;
 
-import jpa.demo.service.DiscountPolicy;
 import jpa.demo.service.DiscountService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
