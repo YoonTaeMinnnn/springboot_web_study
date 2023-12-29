@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Qualifier("p")
-public class PessimisticLockService implements StockService{
+public class PessimisticLockStockService implements StockService{
     private final StockRepository stockRepository;
 
-    public PessimisticLockService(StockRepository stockRepository) {
+    public PessimisticLockStockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 

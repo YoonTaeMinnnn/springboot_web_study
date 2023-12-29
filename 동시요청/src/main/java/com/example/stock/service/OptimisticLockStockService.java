@@ -4,24 +4,21 @@ import com.example.stock.domain.Stock;
 import com.example.stock.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Qualifier("d")
-public class DefaultStockService implements StockService{
+@Qualifier("o")
+public class OptimisticLockStockService implements StockService{
 
     private final StockRepository stockRepository;
 
-    public DefaultStockService(StockRepository stockRepository) {
+    public OptimisticLockStockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public synchronized void decrease(Long id, Long quantity){
-        Stock stock = stockRepository.findById(id).orElseThrow();
+    @Transactional
+    public void decrease(Long id, Long quantity){
+        Stock stock = stockRepository.findByIdWithPessimisticLock(id);
         stock.decrease(quantity);
     }
-
-
 }
