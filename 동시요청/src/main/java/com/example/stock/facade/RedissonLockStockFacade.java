@@ -23,7 +23,7 @@ public class RedissonLockStockFacade {
         RLock lock = redissonClient.getLock(id.toString());
 
         try{
-            // 얼마나 시도할것인지, 얼마나 점유할 것인지
+            // 얼마나 기다릴 것인지, 얼마나 최대 얼마나 점유할 것인지 (이 전에 회수 가능)
             boolean available = lock.tryLock(10, 1, TimeUnit.SECONDS);
 
             if (!available) {
