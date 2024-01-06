@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.repository.CouponCountRepository;
 import com.example.repository.CouponRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +23,15 @@ class ApplyServiceTest {
 
     @Autowired private ApplyService applyService;
     @Autowired private CouponRepository couponRepository;
+    @Autowired private CouponCountRepository couponCountRepository;
 
     @Test
     public void 한번만응모() {
         applyService.apply(1L);
 
         long count = couponRepository.count();
+//        Long count = couponCountRepository.increment();
+
 
         assertThat(count).isEqualTo(1);
     }
@@ -46,14 +50,13 @@ class ApplyServiceTest {
 
         for (int i = 0; i < threadCount; i++) {
             long userId = i;
-            try {
-                executorService.submit(() -> {
+            executorService.submit(()->{
+                try{
                     applyService.apply(userId);
-                });
-            } finally {
-                // 쓰레드 의 실행이 끝날 때마다 카운트 -1
-                latch.countDown();
-            }
+                } finally {
+                    latch.countDown();
+                }
+            });
         }
 
         // count 가 0이 될 때까지 대기
