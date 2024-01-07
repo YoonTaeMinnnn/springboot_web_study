@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.api.repository;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ public class CouponCountRepository {
     public Long increment() {
         return template
                 .opsForValue()
-                .increment("coupon_count");
+                .increment("coupon_countr");
     }
 
 }

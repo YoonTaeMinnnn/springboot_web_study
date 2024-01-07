@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.api.config;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
