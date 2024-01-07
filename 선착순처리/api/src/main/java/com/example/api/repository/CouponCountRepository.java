@@ -15,7 +15,7 @@ public class CouponCountRepository {
     public Long increment() {
         return template
                 .opsForValue()
-                .increment("coupon_countr");
+                .increment("coupon_countrrrr");
     }
 
 }

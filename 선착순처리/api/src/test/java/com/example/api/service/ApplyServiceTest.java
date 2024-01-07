@@ -48,6 +48,7 @@ class ApplyServiceTest {
             executorService.submit(()->{
                 try{
                     applyService.apply(userId);
+                    System.out.println("userId = " + userId);
                 } finally {
                     latch.countDown();
                 }
